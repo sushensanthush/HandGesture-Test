@@ -46,14 +46,15 @@ def draw_landmarks_on_image(rgb_image, detection_result):
   return annotated_image
 
 baseOption = python.BaseOptions(model_asset_path="hand_landmarker.task")
-options = vision.HandLandmarkerOptions(base_options=baseOption, num_hands=1)
+options = vision.HandLandmarkerOptions(base_options=baseOption, num_hands=2)
 detector = vision.HandLandmarker.create_from_options(options)
 
 cap = cv2.VideoCapture("hand.mp4")
 
 while True:
   ret, frame = cap.read()
-  mpImage = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame)
+  i = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+  mpImage = mp.Image(image_format=mp.ImageFormat.SRGB, data=i)
   result = detector.detect(mpImage)
   annotatedImage = draw_landmarks_on_image(mpImage.numpy_view(), result)
   cv2.imshow('Image',annotatedImage)
