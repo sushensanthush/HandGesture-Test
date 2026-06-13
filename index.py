@@ -52,15 +52,7 @@ detector = vision.HandLandmarker.create_from_options(options)
 image = mp.Image.create_from_file("hand.jpg")
 result = detector.detect(image)
 
-rgb_image = image.numpy_view()
-annotatedImage = draw_landmarks_on_image(rgb_image, result)
-
+annotatedImage = draw_landmarks_on_image(image.numpy_view(), result)
 colorCorrectedImage = cv2.cvtColor(annotatedImage, cv2.COLOR_RGB2BGR)
-
-cv2.namedWindow('Image', cv2.WINDOW_NORMAL)  # allow manual control
 cv2.imshow('Image', colorCorrectedImage)
-
-cv2.resizeWindow('Image', colorCorrectedImage.shape[1], colorCorrectedImage.shape[0])  # exact size
-
 cv2.waitKey(0)
-cv2.destroyAllWindows()
