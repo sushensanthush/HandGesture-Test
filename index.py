@@ -53,5 +53,5 @@ image = mp.Image.create_from_file("hand.jpg")
 result = detector.detect(image)
 
 annotatedImage = draw_landmarks_on_image(image.numpy_view(), result)
-cv2.imshow('Image',)
+cv2.imshow('Image', annotatedImage)
 cv2.waitKey(0)
