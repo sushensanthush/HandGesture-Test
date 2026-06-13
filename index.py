@@ -49,9 +49,22 @@ baseOption = python.BaseOptions(model_asset_path="hand_landmarker.task")
 options = vision.HandLandmarkerOptions(base_options=baseOption, num_hands=1)
 detector = vision.HandLandmarker.create_from_options(options)
 
+
 image = mp.Image.create_from_file("hand.jpg")
 result = detector.detect(image)
 
+
 annotatedImage = draw_landmarks_on_image(image.numpy_view(), result)
-cv2.imshow('Image', annotatedImage)
+colorCorrectedImage = cv2.cvtColor(annotatedImage, cv2.COLOR_RGB2BGR)
+
+
+colorCorrectedImage = cv2.resize(
+    colorCorrectedImage,
+    (int(w * scale), int(h * scale))
+)
+
+
+cv2.namedWindow('Image', cv2.WINDOW_NORMAL)
+cv2.imshow('Image', colorCorrectedImage)
 cv2.waitKey(0)
+cv2.destroyAllWindows()
